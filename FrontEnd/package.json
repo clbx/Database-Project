@@ -1,0 +1,15 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Front end for the CS309 Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Clay Buxton",
+  "license": "ISC",
+  "dependencies": {
+    "get-json": "^1.0.1",
+    "mysql": "^2.16.0"
+  }
+}
