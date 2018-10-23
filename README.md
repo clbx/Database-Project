@@ -7,7 +7,7 @@ An all in one database for storing courses, grades, faculty/staff, and student i
 ### Courses
 
 | Course ID | Department | Course Code | Course Extra | Name of Class | Instructor FName | Instructor LName | Status  | Open Seats | Total Seats | Days Offered | Time Offered | Building | Room | Credits | PreRequisets | CoRequsiets|
-|-----------|------------|-------------|--------------|---------------|------------------|------------------|---------|------------|-------------|--------------|--------------|----------|------|---------|
+|-----------|------------|-------------|--------------|---------------|------------------|------------------|---------|------------|-------------|--------------|--------------|----------|------|---------|--------|--------|
 | int       | varchar    | int         | varchar      | varchar       | varchar          | varchar          | varchar | int        | int         | varchar      | varchar      | varchar  | int  | int     | varchar | varchar |
 
 \* May be `int` depending on significance of excess
