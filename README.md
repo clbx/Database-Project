@@ -15,7 +15,7 @@ An all in one database for storing courses, grades, faculty/staff, and student i
 \** May be some kind of date format assuming it can work correctly
 
 ## Why Ours is Better
-
+find out next week on "**This class is a waste of time.**"
 
 ## Business Rules
 * Filled Seats cannot excede Open Seats
