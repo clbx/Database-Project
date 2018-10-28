@@ -4,6 +4,8 @@ Project for CS309 Database Systems
 An all in one database for storing courses, grades, faculty/staff, and student information
 
 ## Databases
+
+[database diagram](https://i.imgur.com/am9DGNm.png)
 ### Courses
 
 | Course ID | Department | Course Code | Course Extra | Name of Class | Instructor FName | Instructor LName | Status  | Open Seats | Total Seats | Days Offered | Time Offered | Building | Room | Credits | PreRequisets | CoRequsiets|
