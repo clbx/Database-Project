@@ -1,0 +1,16 @@
+Created temporary directory: /private/var/folders/tg/tyyxfn9s533ft51_jsjvgvk80000gn/T/pip-ephem-wheel-cache-Jba8U1
+Created temporary directory: /private/var/folders/tg/tyyxfn9s533ft51_jsjvgvk80000gn/T/pip-req-tracker-USpwXe
+Created requirements tracker '/private/var/folders/tg/tyyxfn9s533ft51_jsjvgvk80000gn/T/pip-req-tracker-USpwXe'
+Created temporary directory: /private/var/folders/tg/tyyxfn9s533ft51_jsjvgvk80000gn/T/pip-install-7z0bGG
+Cleaning up...
+Removed build tracker '/private/var/folders/tg/tyyxfn9s533ft51_jsjvgvk80000gn/T/pip-req-tracker-USpwXe'
+ERROR: You must give at least one requirement to install (see "pip help install")
+Exception information:
+Traceback (most recent call last):
+  File "/Users/clbx/Projects/Database-Project/FrontEnd/lib/python2.7/site-packages/pip/_internal/cli/base_command.py", line 143, in main
+    status = self.run(options, args)
+  File "/Users/clbx/Projects/Database-Project/FrontEnd/lib/python2.7/site-packages/pip/_internal/commands/install.py", line 293, in run
+    self.name, wheel_cache
+  File "/Users/clbx/Projects/Database-Project/FrontEnd/lib/python2.7/site-packages/pip/_internal/cli/base_command.py", line 252, in populate_requirement_set
+    '(see "pip help %(name)s")' % opts)
+CommandError: You must give at least one requirement to install (see "pip help install")

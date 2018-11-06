@@ -10,22 +10,31 @@
 
 </head>
 <body>
-<table>
-  {% for i in range(data|count) %}
-    <tr>
-      <td> {{ i }} </td>
-      <td>{{ data[i][0]}}</td>
-      <td>{{ data[i][1]}}</td>
-      <td>{{ data[i][2]}}</td>
-      <td>{{ data[i][3]}}</td>
-      <td>{{ data[i][4]}}</td>
-      <td>{{ data[i][5]}}</td>
-      <td>{{ data[i][6]}}</td>
-    </tr>
-  {% endfor %}
 
 
-</table>
+  <form action="{{ url_for('handle_data') }}" method="post">
+    Choose Department: <select name="dept">
+      <option value="biology">Biology Department</option>
+      <option value="business">Business Department</option>
+    </select>
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <table>
+    {% for i in range(data|count) %}
+      <tr>
+        <td> {{ i }} </td>
+        <td>{{ data[i][0]}}</td>
+        <td>{{ data[i][1]}}</td>
+        <td>{{ data[i][2]}}</td>
+        <td>{{ data[i][3]}}</td>
+        <td>{{ data[i][4]}}</td>
+        <td>{{ data[i][5]}}</td>
+        <td>{{ data[i][6]}}</td>
+      </tr>
+    {% endfor %}
+  </table>
 
 </body>
 </html>

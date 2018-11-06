@@ -1,21 +1,60 @@
 from flask import Flask
 from flask import render_template
-from flaskext.mysql import MySQL
+from flask import request
+import mysql.connector
 
 
 app = Flask(__name__)
-mysql = MySQL()
-app.config['MYSQL_DATABASE_USER'] = 'test'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
-app.config['MYSQL_DATABASE_DB'] = 'dev'
-app.config['MYSQL_DATABASE_HOST'] = 'database.clbx.io'
-mysql.init_app(app)
+
+
+mydb= mysql.connector.connect(
+    host="database.clbx.io",
+    user="test",
+    passwd="12Password34",
+    database="dev"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("SELECT * FROM Courses")
+
+data = mycursor.fetchall()
+
+def queryGenerator(formData):
+
+    # SELECT * FROM Courses WHERE CODE LIKE "%crs%"
+    query = "SELECT * FROM Courses"
+    if(getDeps(formData.values()[0]) != "null"):
+        query += " WHERE CODE LIKE \"%" + getDeps(formData.values()[0]) + "%\""
+
+    return query
 
 
 @app.route('/')
 def index():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * from Courses")
-    data = cursor.fetchall()
     return render_template('index.html',data=data)
+
+
+@app.route('/handle_data',methods=['POST'])
+def handle_data():
+
+    getdata = request.form
+    query = queryGenerator(getdata)
+
+    print(query)
+
+    mycursor.execute(query)
+    data = mycursor.fetchall()
+    print(getdata)
+
+    return render_template('index.html',data=data)
+
+
+
+def getDeps(department):
+    if(department == "biology"):
+        return "BIO"
+    elif(department == "business"):
+        return "BA"
+    else:
+        return "null"
