@@ -43,7 +43,7 @@ def queryGenerator(formData):
 
 @app.route('/')
 def index():
-    return render_template('index.html',data=data)
+    return render_template('index.html',data=data, status=stats)
 
 
 @app.route('/handle_data',methods=['POST'])
