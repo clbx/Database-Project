@@ -19,10 +19,50 @@
       <option value="all">All</option>
       <option value="biology">Biology Department</option>
       <option value="business">Business Department</option>
+      <option value="chemistry">Chemistry Department</option>
+      <option value="cognitive">Cognitive Sciences</option>
+      <option value="communications">Communications Department</option>
+      <option value="compsci">Computer Science Department</option>
+      <option value="writing">Creative Writing</option>
+      <option value="data">Data Analytics</option>
+      <option value="education">Education Department</option>
+      <option value="engineering">Engineering and Physics Department</option>
+      <option value="english">English Department</option>
+      <option value="arts">Fine and Performing Arts Department</option>
+      <option value="health">Health and Wellness Department</option>
+      <option value="history">History Department</option>
+      <option value="is">Interdisciplinary Studies</option>
+      <option value="interfaith">Interfaith Leadership Studies</option>
+      <option value="international">International Studies</option>
+      <option value="math">Mathematical Sciences Department</option>
+      <option value="lang">Modern Languages Department</option>
+      <option value="ot">Occupational Therapy Department</option>
+      <option value="peace">Peace and Conflict Studies</option>
+      <option value="ppls">Politics, Philosophy and Legal Studies Department</option>
+      <option value="psychology">Psychology Department</option>
+      <option value="religious">Religious Studeies Department</option>
+      <option value="socialwork">Social Work Department</option>
+      <option value="sociology">Sociology Department</option>
+      <option value="gender">Women and Gender Studies</option>
+    </select>
+    Choose Core:
+    <select name="core">
+      <option value="null">None</option>
+      <option value="0IC">0IC</option>
+      <option value="CE">CE</option>
+      <option value="HUM">HUM</option>
+      <option value="MA">MA</option>
+      <option value="NCH">NCH</option>
+      <option value="NPS">NPS</option>
+      <option value="PLE">PLE</option>
+      <option value="PLO">PLO</option>
+      <option value="SSC">SSC</option>
+      <option value="WCH">WCH</option>
     </select>
     <br>
+    <hr>
     Write a Query:
-    <input type="text" name="customquery"> Current Table: <b>Courses</b>
+    <input type="text" name="customquery" size="75"> Current Table: <b>Courses</b>
     <br>
     <input type="submit" value="Submit">
   </form>
@@ -30,6 +70,7 @@
   <div class="sqlerror" >
     {{ status.error }}
   </div>
+  <hr>
 
 
 
