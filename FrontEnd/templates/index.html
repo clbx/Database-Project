@@ -6,25 +6,45 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Elizabethtown College Database - Home</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
 
 </head>
 <body>
 
 
   <form action="{{ url_for('handle_data') }}" method="post">
-    Choose Department: <select name="dept">
+    Choose Department:
+    <select name="dept">
+      <option value="all">All</option>
       <option value="biology">Biology Department</option>
       <option value="business">Business Department</option>
     </select>
     <br>
+    Write a Query:
+    <input type="text" name="customquery"> Current Table: <b>Courses</b>
+    <br>
     <input type="submit" value="Submit">
   </form>
+  <br>
+  <div class="sqlerror" >
+    {{ status.error }}
+  </div>
+
+
 
   <table>
+    <tr>
+      <th>ID</th>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Instructor</th>
+      <th>Status</th>
+      <th>Time</th>
+      <th>Credits</th>
+    </tr>
     {% for i in range(data|count) %}
       <tr>
-        <td> {{ i }} </td>
         <td>{{ data[i][0]}}</td>
         <td>{{ data[i][1]}}</td>
         <td>{{ data[i][2]}}</td>

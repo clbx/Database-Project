@@ -1,0 +1,25 @@
+html *{
+  font-family: 'Karla', sans-serif;
+}
+
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+tr:nth-child(even){
+  background-color: #CCC
+}
+
+tr:nth-child(odd){
+  background-color: #FFF
+}
+
+.sqlerror{
+  font-size: 13px;
+  color: #cc5f5f;
+}

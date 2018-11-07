@@ -3,8 +3,13 @@ from flask import render_template
 from flask import request
 import mysql.connector
 
+class Status:
+    error = ""
+
 
 app = Flask(__name__)
+
+status = Status()
 
 
 mydb= mysql.connector.connect(
@@ -14,6 +19,8 @@ mydb= mysql.connector.connect(
     database="dev"
 )
 
+
+
 mycursor = mydb.cursor()
 
 mycursor.execute("SELECT * FROM Courses")
@@ -22,10 +29,14 @@ data = mycursor.fetchall()
 
 def queryGenerator(formData):
 
+    if(formData.values()[0] != ""):
+        query = formData.values()[0]
+        return query
+
     # SELECT * FROM Courses WHERE CODE LIKE "%crs%"
     query = "SELECT * FROM Courses"
-    if(getDeps(formData.values()[0]) != "null"):
-        query += " WHERE CODE LIKE \"%" + getDeps(formData.values()[0]) + "%\""
+    if(getDeps(formData.values()[1]) != "null"):
+        query += " WHERE CODE LIKE \"%" + getDeps(formData.values()[1]) + "%\""
 
     return query
 
@@ -42,17 +53,24 @@ def handle_data():
     query = queryGenerator(getdata)
 
     print(query)
+    try:
+        mycursor.execute(query)
+        data = mycursor.fetchall()
+        status.error = ""
+    except mysql.connector.Error as err:
+        data = "";
+        status.error = ("Error: {}".format(err))
 
-    mycursor.execute(query)
-    data = mycursor.fetchall()
     print(getdata)
 
-    return render_template('index.html',data=data)
+    return render_template('index.html',data=data, status=status)
 
 
 
 def getDeps(department):
-    if(department == "biology"):
+    if(department == "all"):
+        return "null"
+    elif(department == "biology"):
         return "BIO"
     elif(department == "business"):
         return "BA"
