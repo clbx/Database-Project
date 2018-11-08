@@ -5,5 +5,4 @@ FrontEnd/lib/
 \.DS_Store
 
 *.png
-
-FrontEnd/application\.pyc
+*.pyc
