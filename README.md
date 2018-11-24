@@ -4,6 +4,7 @@ Project for CS309 Database Systems
 An all in one database for storing courses, grades, faculty/staff, and student information
 
 ## Databases
+![ERD Diagram](https://i.imgur.com/kSbZPQn.png)
 
 
 ### Courses
