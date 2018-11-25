@@ -1,8 +1,4 @@
 import csv
-import re
-
-# Python script to read course data and put it into sql queries
-
 
 data = []
 
@@ -15,9 +11,6 @@ with open('ScrapedCourses.csv') as file:
 # Now to parse the raw csv
 print(data[1])
 
-
-
-
 # INPUT
 # 0 - Course ID [36390]
 # 1 - Course Code, also contains Department [AC 101 - -BU - - A]
@@ -28,69 +21,30 @@ print(data[1])
 # 6 - Time offered & Room [MWF (12:30pm-1:40pm) H 215]
 # 7 - Credits
 
-# See README for Output design
+#OUTPUT
+# 0 - ID (Primary key for table)
+# 1 - Course Name (AC 101)
+# 2 - Course Extra (BU)
+# 3 - Credits (4)
+# 4 - idDept (2)
+
 
 newdata = []
 
-#idClass
-newdata.append(data[1][0])
+# ID
+newdata.append(0)
 
+# Course Name
 temp = data[1][1]
-#codeClass
 temp = temp.partition('-')[0][:-1]
 newdata.append(temp)
 
-#nameClass
-newdata.append(data[1][2])
+#Course Extra
+temp = data[1][1]
+temp = temp.partition('-')[2][:-1]
+newdata.append(temp)
 
-#idFaculty
-newdata.append('123456')
-
-#statusClass
-temp = data[1][4]
-
-print(temp)
-
-if(temp == "Open"):
-    newdata.append(1)
-elif(temp == "Closed"):
-    newdata.append(0)
-elif(temp == "Cancelled"):
-    newdata.append(2)
-
-#Seats Open / Seats Closed
-temp = data[1][5]
-
-newdata.append(temp.partition('/')[0])
-newdata.append(temp.partition('/')[2])
-
-#timeDays
-temp = data[1][6]
-newdata.append(temp.partition(" ")[0])
-
-#timeHours
-temp2 = temp.partition("(")[2]
-temp3 = temp2.partition(")")[0]
-newdata.append(temp3)
-
-#creditsClass
+#Credits
 newdata.append(data[1][7])
 
-#idBuilding + Room
-temp = data[1][6]
-temp2 = temp.partition(" ")[2]
-temp3 = temp2.partition(" ")[2]
-newdata.append(temp3.partition(" ")[0])
-newdata.append(temp3.partition(" ")[2])
-
-
-
-
-
-
-
-
-
-
-print(newdata)
-#for i in range(len(data)):
+#ID Department
