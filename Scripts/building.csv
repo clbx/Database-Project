@@ -1,0 +1,14 @@
+idBuilding,nameBuilding,abbreviation,operatingHours,location
+1,Online,ONLINE,NULL,NULL
+2,"Esbenshade Hall",E,NULL,NULL
+3,"Hoover Business Building",H,NULL,NULL
+4,"Lyet Wing",L,NULL,NULL
+5,"Musser Hall",MU,NULL,NULL
+6,Nicarry,N,NULL,NULL
+7,"Baugher Student Center",BSC,NULL,NULL
+8,"Royer Residence",R,NULL,NULL
+9,"Steinman Hall",ST,NULL,NULL
+10,"Thompson Gymnasium",TH,NULL,NULL
+11,"Wenger Center",W,NULL,NULL
+12,"Young Center",YC,NULL,NULL
+13,"Zug Memorial Hall",Z,NULL,NULL

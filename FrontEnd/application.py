@@ -185,6 +185,7 @@ def getDeps(department):
         constraints.append(Constraint("LIKE","CODE","%EC%"))
         constraints.append(Constraint("LIKE","CODE","%FBE%"))
         constraints.append(Constraint("LIKE","CODE","%FIN%"))
+        constraints.append(Constraint("LIKE","CODE","%FPA%"))
     elif(department == "chemistry"):
         constraints.append(Constraint("LIKE","CODE","%CH %"))
     elif(department == "cognitive"):
@@ -206,6 +207,7 @@ def getDeps(department):
     elif(department == "engineering"):
         constraints.append(Constraint("LIKE","CODE","%EGR%"))
         constraints.append(Constraint("LIKE","CODE","%PHY%"))
+        constraints.append(Constraint("LIKE","CODE","%ES%"))
     elif(department == "english"):
         constraints.append(Constraint("LIKE","CODE","%EN%"))
         constraints.append(Constraint("LIKE","CODE","%HEN%"))
@@ -214,6 +216,7 @@ def getDeps(department):
         constraints.append(Constraint("LIKE","CODE","%ART%"))
         constraints.append(Constraint("LIKE","CODE","%MU%"))
         constraints.append(Constraint("LIKE","CODE","%TH%"))
+        constraints.append(Constraint("LIKE","CODE","%DA%"))
     elif(department == "health"):
         constraints.append(Constraint("LIKE","CODE","%PE%"))
     elif(department == "history"):
@@ -235,6 +238,7 @@ def getDeps(department):
         constraints.append(Constraint("LIKE","CODE","%SP%"))
     elif(department == "ot"):
         constraints.append(Constraint("LIKE","CODE","%OT%"))
+        constraints.append(Constraint("LIKE","CODE","%ASL%"))
     elif(department == "peace"):
         constraints.append(Constraint("LIKE","CODE","%PCS%"))
     elif(department == "ppls"):
