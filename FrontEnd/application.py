@@ -28,13 +28,33 @@ mydb= mysql.connector.connect(
     host="database.clbx.io",
     user="test",
     passwd="12Password34",
-    database="dev"
+    database="college"
 )
 
 
 mycursor = mydb.cursor()
 
-mycursor.execute("SELECT * FROM Courses")
+
+bigquery = '''
+SELECT
+    Class.idClass as RefNo,
+    Class.idCourse as CourseID,
+    Course.courseName as \"Course Name\",
+    concat(Faculty.fName,\" \",Faculty.lName) as Instructor,
+    Class.statusClass as Status,
+    concat(Class.seatsOpen,\"/\",Class.seatsTotal) as Seats,
+    concat(Class.timeDays,\" \",Class.timeHours) as Times,
+    concat(Building.abbreviation,\" \",Room.roomNumber) as Room,
+    Course.credits as Credits
+FROM college.Class, college.Course, college.Faculty, college.Room, college.Building
+WHERE Class.idCourse = Course.idCourse
+AND Class.idFaculty = Faculty.idFaculty
+AND Class.idRoom = Room.idRoom
+AND Room.building = Building.idBuilding
+'''
+
+
+mycursor.execute(bigquery)
 
 data = mycursor.fetchall()
 
@@ -73,30 +93,36 @@ def queryGenerator(formData):
     if(formData.values()[0] != ""):
         query = formData.values()[0]
         return query
+    if(formData.values()[2] != ""):
+        query = bigquery + "AND Course.courseName LIKE \"%" + formData.values()[2] + "%\""
+        return query
 
     # SELECT * FROM Courses WHERE CODE LIKE "%crs%"
-    query = "SELECT * FROM Courses" + constraintGenerator(formData)
+    query = bigquery + constraintGenerator(formData)
 
     return query
 
 def constraintGenerator(formData):
 
     getDeps(formData.values()[1])
-    getCore(formData.values()[2])
+    getCore(formData.values()[3])
 
     print("Form val: ")
     for constraint in constraints:
         print("Key: "+ constraint.key+" Value "+constraint.value)
 
     queryConst = ""
+
+    i = 0
+
     #Process constraints
     if(len(constraints) > 0):
         if(constraints[0].type == "LIKE"):
-            queryConst += " WHERE " + constraints[0].key + " LIKE \"" + constraints[0].value + "\""
+            queryConst += " AND( " + constraints[0].key + " LIKE \"" + constraints[0].value + "\""
         #if(constraints[0].type == "GREATER"):
 
         #if(constraints[0].type == "LESS"):
-    i = 1
+        i = 1
     for constraint in constraints[1:]:
         if(constraints[i].type == "LIKE"):
             queryConst += " OR " + constraints[i].key + " LIKE \"" + constraints[i].value + "\""
@@ -105,6 +131,9 @@ def constraintGenerator(formData):
         #if(constraints[0].type == "LESS"):
 
         i += 1
+
+    if( i > 0):
+        queryConst += ")"
 
     return queryConst
 
@@ -179,104 +208,104 @@ def getDeps(department):
     if(department == "all"):
         return
     elif(department == "biology"):
-        constraints.append(Constraint("LIKE","CODE","%BIO%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%BIO%"))
     elif(department == "business"):
-        constraints.append(Constraint("LIKE","CODE","%BA%"))
-        constraints.append(Constraint("LIKE","CODE","%EC%"))
-        constraints.append(Constraint("LIKE","CODE","%FBE%"))
-        constraints.append(Constraint("LIKE","CODE","%FIN%"))
-        constraints.append(Constraint("LIKE","CODE","%FPA%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%BA%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%EC%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%FBE%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%FIN%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%FPA%"))
     elif(department == "chemistry"):
-        constraints.append(Constraint("LIKE","CODE","%CH %"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%CH %"))
     elif(department == "cognitive"):
-        constraints.append(Constraint("LIKE","CODE","%CSC%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%CSC%"))
     elif(department == "communications"):
-        constraints.append(Constraint("LIKE","CODE","%COM%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%COM%"))
     elif(department == "compsci"):
-        constraints.append(Constraint("LIKE","CODE","CS %"))
-        constraints.append(Constraint("LIKE","CODE","%DS %"))
+        constraints.append(Constraint("LIKE","Course.idCourse","CS %"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%DS %"))
     elif(department == "writing"):
-        constraints.append(Constraint("LIKE","CODE","%CW%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%CW%"))
     elif(department == "data"):
-        constraints.append(Constraint("LIKE","CODE","%DAT%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%DAT%"))
     elif(department == "education"):
-        constraints.append(Constraint("LIKE","CODE","%ED%"))
-        constraints.append(Constraint("LIKE","CODE","%MCI%"))
-        constraints.append(Constraint("LIKE","CODE","%MSE%"))
-        constraints.append(Constraint("LIKE","CODE","%SED%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%ED%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%MCI%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%MSE%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%SED%"))
     elif(department == "engineering"):
-        constraints.append(Constraint("LIKE","CODE","%EGR%"))
-        constraints.append(Constraint("LIKE","CODE","%PHY%"))
-        constraints.append(Constraint("LIKE","CODE","%ES%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%EGR%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%PHY%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%ES%"))
     elif(department == "english"):
-        constraints.append(Constraint("LIKE","CODE","%EN%"))
-        constraints.append(Constraint("LIKE","CODE","%HEN%"))
-        constraints.append(Constraint("LIKE","CODE","%LAT%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%EN%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%HEN%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%LAT%"))
     elif(department == "arts"):
-        constraints.append(Constraint("LIKE","CODE","%ART%"))
-        constraints.append(Constraint("LIKE","CODE","%MU%"))
-        constraints.append(Constraint("LIKE","CODE","%TH%"))
-        constraints.append(Constraint("LIKE","CODE","%DA%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%ART%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%MU%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%TH%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%DA%"))
     elif(department == "health"):
-        constraints.append(Constraint("LIKE","CODE","%PE%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%PE%"))
     elif(department == "history"):
-        constraints.append(Constraint("LIKE","CODE","%HI%"))
-        constraints.append(Constraint("LIKE","CODE","%PHS%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%HI%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%PHS%"))
     elif(department == "is"):
-        constraints.append(Constraint("LIKE","CODE","%IC%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%IC%"))
     elif(department == "interfaith"):
-        constraints.append(Constraint("LIKE","CODE","%ILS%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%ILS%"))
     elif(department == "international"):
-        constraints.append(Constraint("LIKE","CODE","%INT%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%INT%"))
     elif(department == "math"):
-        constraints.append(Constraint("LIKE","CODE","%MA%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%MA%"))
     elif(department == "lang"):
-        constraints.append(Constraint("LIKE","CODE","%ESL%"))
-        constraints.append(Constraint("LIKE","CODE","%FR%"))
-        constraints.append(Constraint("LIKE","CODE","%GER%"))
-        constraints.append(Constraint("LIKE","CODE","%JA%"))
-        constraints.append(Constraint("LIKE","CODE","%SP%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%ESL%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%FR%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%GER%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%JA%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%SP%"))
     elif(department == "ot"):
-        constraints.append(Constraint("LIKE","CODE","%OT%"))
-        constraints.append(Constraint("LIKE","CODE","%ASL%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%OT%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%ASL%"))
     elif(department == "peace"):
-        constraints.append(Constraint("LIKE","CODE","%PCS%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%PCS%"))
     elif(department == "ppls"):
-        constraints.append(Constraint("LIKE","CODE","%PH %"))
-        constraints.append(Constraint("LIKE","CODE","%PP %"))
-        constraints.append(Constraint("LIKE","CODE","%PS %"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%PH %"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%PP %"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%PS %"))
     elif(department == "psychology"):
-        constraints.append(Constraint("LIKE","CODE","%PSY%"))
-        constraints.append(Constraint("LIKE","CODE","%HPC%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%PSY%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%HPC%"))
     elif(department == "religious"):
-        constraints.append(Constraint("LIKE","CODE","%REL%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%REL%"))
     elif(department == "socialwork"):
-        constraints.append(Constraint("LIKE","CODE","%SW%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%SW%"))
     elif(department == "sociology"):
-        constraints.append(Constraint("LIKE","CODE","%AN%"))
-        constraints.append(Constraint("LIKE","CODE","%SO%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%AN%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%SO%"))
     elif(department == "gender"):
-        constraints.append(Constraint("LIKE","CODE","%WGS%"))
+        constraints.append(Constraint("LIKE","Course.idCourse","%WGS%"))
     else:
         return
 def getCore(core):
     if(core == "0IC"):
-        constraints.append(Constraint("LIKE","CODE","%10IC%"))
+        constraints.append(Constraint("LIKE","Course.courseExt","%10IC%"))
     elif(core == "CE"):
-        constraints.append(Constraint("LIKE","CODE","%3CE%"))
+        constraints.append(Constraint("LIKE","Course.courseExt","%3CE%"))
     elif(core == "HUM"):
-        constraints.append(Constraint("LIKE","CODE","%9HUM%"))
+        constraints.append(Constraint("LIKE","Course.courseExt","%9HUM%"))
     elif(core == "MA"):
-        constraints.append(Constraint("LIKE","CODE","%8MA%"))
+        constraints.append(Constraint("LIKE","Course.courseExt","%8MA%"))
     elif(core == "NCH"):
-        constraints.append(Constraint("LIKE","CODE","%5NCH%"))
+        constraints.append(Constraint("LIKE","Course.courseExt","%5NCH%"))
     elif(core == "NPS"):
-        constraints.append(Constraint("LIKE","CODE","%6NPS%"))
+        constraints.append(Constraint("LIKE","Course.courseExt","%6NPS%"))
     elif(core == "PLE"):
-        constraints.append(Constraint("LIKE","CODE","%1PLE%"))
+        constraints.append(Constraint("LIKE","Course.courseExt","%1PLE%"))
     elif(core == "PLO"):
-        constraints.append(Constraint("LIKE","CODE","%2PLO%"))
+        constraints.append(Constraint("LIKE","Course.courseExt","%2PLO%"))
     elif(core == "SSC"):
-        constraints.append(Constraint("LIKE","CODE","%7SSC%"))
+        constraints.append(Constraint("LIKE","Course.courseExt","%7SSC%"))
     elif(core == "WCH"):
-        constraints.append(Constraint("LIKE","CODE","%4WCH%"))
+        constraints.append(Constraint("LIKE","Course.courseExt","%4WCH%"))
