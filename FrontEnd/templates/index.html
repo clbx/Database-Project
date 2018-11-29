@@ -66,6 +66,7 @@
     Write a Query:
     <input type="text" name="customquery" size="75">
     <br>
+    <hr>
     <input type="submit" value="Submit">
   </form>
   <br>
@@ -74,9 +75,8 @@
   </div>
   <hr>
 
-
-
   <table>
+    {% if tableType == "main" %}
     <tr>
       <th>ID</th>
       <th>Code</th>
@@ -88,9 +88,17 @@
       <th>Room</th>
       <th>Credits</th>
     </tr>
+    {% endif %}
+
+
+
+
     {% for i in range(data|count) %}
       <tr>
-        <td>{{ data[i][0]}}</td>
+        {% for j in range(data[i]|count) %}
+          <td>{{ data[i][j]}}</td>
+        {% endfor %}
+        <!--
         <td>{{ data[i][1]}}</td>
         <td>{{ data[i][2]}}</td>
         <td>{{ data[i][3]}}</td>
@@ -99,6 +107,7 @@
         <td>{{ data[i][6]}}</td>
         <td>{{ data[i][7]}}</td>
         <td>{{ data[i][8]}}</td>
+        -->
       </tr>
     {% endfor %}
   </table>

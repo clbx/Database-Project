@@ -58,22 +58,23 @@ mycursor.execute(bigquery)
 
 data = mycursor.fetchall()
 
-
+tableType = "main"
 
 @app.route('/')
 def index():
-    return render_template('index.html',data=data, status=status)
+    return render_template('index.html',data=data, status=status,tableType=tableType)
 
 
 @app.route('/handle_data',methods=['POST'])
 def handle_data():
 
+    tableType = "main"
     getdata = request.form
     del constraints [:]
     query = ""
 
 
-    query = queryGenerator(getdata)
+    query, tableType = queryGenerator(getdata, tableType)
 
     print(query)
     try:
@@ -86,21 +87,28 @@ def handle_data():
 
     print(getdata)
 
-    return render_template('index.html',data=data, status=status)
+    print(tableType)
 
-def queryGenerator(formData):
+    return render_template('index.html',data=data, status=status, tableType=tableType)
+
+def queryGenerator(formData, tableType):
+
 
     if(formData.values()[0] != ""):
         query = formData.values()[0]
-        return query
+        tableType = "other"
+        return query, tableType
+
+
+
     if(formData.values()[2] != ""):
         query = bigquery + "AND Course.courseName LIKE \"%" + formData.values()[2] + "%\""
-        return query
+        return query, tableType
 
     # SELECT * FROM Courses WHERE CODE LIKE "%crs%"
     query = bigquery + constraintGenerator(formData)
 
-    return query
+    return query, tableType
 
 def constraintGenerator(formData):
 
