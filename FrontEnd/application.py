@@ -26,7 +26,7 @@ constraints = []
 
 mydb= mysql.connector.connect(
     host="database.clbx.io",
-    user="test",
+    user="Present",
     passwd="12Password34",
     database="college"
 )
