@@ -6,20 +6,6 @@ An all in one database for storing courses, grades, faculty/staff, and student i
 ## Databases
 ![ERD Diagram](https://i.imgur.com/kSbZPQn.png)
 
-
-### Courses
-
-| Course ID | Department | Course Code | Course Extra | Name of Class | Instructor FName | Instructor LName | Status  | Open Seats | Total Seats | Days Offered | Time Offered | Building | Room | Credits | PreRequisets | CoRequsiets|
-|-----------|------------|-------------|--------------|---------------|------------------|------------------|---------|------------|-------------|--------------|--------------|----------|------|---------|--------|--------|
-| int       | varchar    | int         | varchar      | varchar       | varchar          | varchar          | varchar | int        | int         | varchar      | varchar      | varchar  | int  | int     | varchar | varchar |
-
-\* May be `int` depending on significance of excess
-
-\** May be some kind of date format assuming it can work correctly
-
-## Why Ours is Better
-Find out next week on "**This class is a waste of time.**"
-
 ## Business Rules
 * Filled Seats cannot excede Open Seats and cannot be lower than 0 seats.
 * Students cannot excede X amount of credits
