@@ -4,7 +4,7 @@ Project for CS309 Database Systems
 An all in one database for storing courses, grades, faculty/staff, and student information
 
 ## Databases
-![ERD Diagram](https://i.imgur.com/kSbZPQn.png)
+![ERD Diagram](https://imgur.com/a/vT8WYIg)
 
 ## Business Rules
 * Filled Seats cannot excede Open Seats and cannot be lower than 0 seats.
